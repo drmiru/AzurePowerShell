@@ -33,7 +33,7 @@ function Export-cAZPolicyDefinitions {
     $inventoryData = @()
     Foreach ($def in $definitions)
     {
-        $json = $definitions[0] | ConvertTo-Json -Depth 50 | Foreach-Object { [System.Text.RegularExpressions.Regex]::Unescape($_) }
+        $json = $def | ConvertTo-Json -Depth 50 | Foreach-Object { [System.Text.RegularExpressions.Regex]::Unescape($_) }
         $jsonshort = trim-jsontabs -inputData $json -depth 3
         #Add to Inventory
         $iObj = [pscustomobject][ordered]@{
