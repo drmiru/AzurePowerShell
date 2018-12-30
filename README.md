@@ -2,7 +2,6 @@
 various scripts and functions for Azure (Posh)
 
 ## Content
-
-.\functions
+https://github.com/drmiru/AzurePowerShell/wiki/Content
 
 
