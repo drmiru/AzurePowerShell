@@ -51,14 +51,7 @@ Switch ($operation.ToLower()) {
                 PublicIPAddresses = $publicIPs
                 VirtualNetwork = $virtualNetworkName
                 resourceGroupName = $resourceGroupName
-            }
-            try {
-                write-verbose -message "Saving Information to Tag: FirewallInfo"
-                Set-AzResource -Tag @{FirewallInfo=($fwEntity | ConvertTo-Json)} -ResourceId $fwObject.Id -Force | out-null
-            }
-            catch {
-                throw "failed to save firewall information to Tags. skipping stop operation"
-            }
+            }            
         }
         catch {
             throw "Error while gathering current IP Configuration: $($_.Exception.Message)"
@@ -72,6 +65,14 @@ Switch ($operation.ToLower()) {
         }
         catch {
             throw "Error deallocating Azure Firewall: $($fwObject.Name). $($_.Exception.Message)"
+        }
+        
+        try {
+                write-verbose -message "Saving Information to Tag: FirewallInfo"
+                Set-AzResource -Tag @{FirewallInfo=($fwEntity | ConvertTo-Json)} -ResourceId $fwObject.Id -Force | out-null
+            }
+        catch {
+            throw "failed to save firewall information to Tags. skipping stop operation"
         }
     }
     "start" {
